@@ -1,5 +1,6 @@
 class Hello {
     public static void main(String[] args) {
+        
         byte bMax = Byte.MAX_VALUE;
         byte bMin = Byte.MIN_VALUE;
         short sMax = Short.MAX_VALUE;
