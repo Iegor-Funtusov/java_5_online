@@ -3,7 +3,11 @@
 int main()
 {
     printf("\nHello World!\n\n");
-    int a = 10;
-    int* a_ptr = &a;
+    int a;
+    printf("%d\n", a);
     return 0;
+}
+
+struct Human {
+    int age;
 }
