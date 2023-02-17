@@ -55,7 +55,7 @@ public class StudentController {
         System.out.println("Please enter the age:");
         String stringAge = reader.readLine();
         int age = Integer.parseInt(stringAge);
-        Student student = new Student();
+        Student student = new Student(123);
         student.setFirstName(firstName);
         student.setLastName(lastName);
         student.setPhone(phone);

@@ -5,19 +5,45 @@ import java.util.Objects;
 // data class
 public class Student extends BaseEntity {
 
-    private int inn;
+    private final int inn; // unavailable initialization
     private String firstName;
     private String lastName;
     private String phone;
     private int age;
     private double sallary;
     private boolean active;
+    private boolean active1;
+//
+//    public Student() {
+//        this.inn = 0;
+//
+//    }
 
-    public Student() {
+    public Student(int inn) {
+        this.inn = inn;
         this.age = 0;
         this.sallary = 0.0;
         this.active = true;
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     public void Student() { }
 
@@ -25,9 +51,6 @@ public class Student extends BaseEntity {
         return inn;
     }
 
-    public void setInn(int inn) {
-        this.inn = inn;
-    }
 
     public double getSallary() {
         return sallary;
