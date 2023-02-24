@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+  <meta charset="UTF-8">
+  <title>New Users</title>
+</head>
+<body>
+<div layout:fragment="app">
+  <div class="row">
+    <div class="col-12">
+      <div class="card mt-3">
+        <div class="card-header">
+          New user
+        </div>
+        <div class="card-body">
+          <form th:action="@{/users/new}" method="post" th:object="${user}">
+            <div class="mb-3">
+              <label for="exampleInputName" class="form-label">Name</label>
+              <input type="text" class="form-control" id="exampleInputName" th:field="*{name}">
+            </div>
+            <div class="mb-3">
+              <label for="exampleInputAge" class="form-label">Age</label>
+              <input type="text" class="form-control" id="exampleInputAge" th:field="*{age}">
+            </div>
+            <button type="submit" class="btn btn-primary">Create</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>
