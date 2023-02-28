@@ -9,6 +9,16 @@ import java.util.regex.Pattern;
 public class StringMain {
 
     public static void main(String[] args) throws InterruptedException {
+
+        String s3 = "fdsfsf fsdfsdf fsdfsdfs fsdfsdf";
+        System.out.println("s3 = " + s3);
+        String[] s1 = s3.split(" ");
+        String newS = "";
+        for (String s2 : s1) {
+            newS = newS.concat(" ");
+            newS = newS.concat(s2);
+        }
+        System.out.println("newS = " + newS);
 //        Student student1 = new Student("Roman", "Romanov");
 //        System.out.println("student1 = " + student1);
 //        student1.setLastName("Romanov1");
