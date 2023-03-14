@@ -14,7 +14,7 @@ public class ExceptionCheckTest {
 
     private void task1(int a) {
         if (a == 0) {
-            throw new RuntimeException("invalid value: is zero");
+            throw new RuntimeException("invalid value: is zero"); // thread stop
         }
         System.out.println("a = " + 10 / a);
     }
@@ -54,6 +54,6 @@ public class ExceptionCheckTest {
                 throw new RuntimeException(e);
             }
         }
-
+        reader = null;
     }
 }
