@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<students>
+    <student>
+        <id>1</id>
+        <firstName>Test1</firstName>
+        <lastName>Test11</lastName>
+    </student>
+    <student>
+        <id>2</id>
+        <firstName>Test2</firstName>
+        <lastName>Test22</lastName>
+    </student>
+    <student>
+        <id>3</id>
+        <firstName>Test3</firstName>
+        <lastName>Test33</lastName>
+    </student>
+</students>
