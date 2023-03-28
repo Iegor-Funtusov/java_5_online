@@ -1,4 +1,5 @@
 package ua.com.alevel;
+
 import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
 import java.time.ZoneId;
@@ -6,23 +7,16 @@ import java.time.ZonedDateTime;
 
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Set;
 
 public class DateMain {
 
-
-
-
     public static void main(String[] args) {
-
-
-
         long time = System.currentTimeMillis();
         System.out.println("time = " + time);
         Date date = new Date();
         Date now = new Date(time);
-//        System.out.println("date = " + date);
-//        System.out.println("now = " + now);
+        System.out.println("date = " + date);
+        System.out.println("now = " + now);
         Date afterOneHourse = new Date(time + 1000 * 60 * 60);
         System.out.println("afterOneHourse = " + afterOneHourse);
 
@@ -46,17 +40,5 @@ public class DateMain {
 
         OffsetDateTime offsetDateTime1 = OffsetDateTime.now(zoneId);
         System.out.println("offsetDateTime1 = " + offsetDateTime1);
-
-
-
     }
-
-
-
 }
-
-
-
-
-
-
