@@ -12,6 +12,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 
 public class EmpoloyeeDaoImpl implements EmpoloyeeDao {
 
@@ -60,14 +61,14 @@ public class EmpoloyeeDaoImpl implements EmpoloyeeDao {
     }
 
     @Override
-    public Employee findById(Long id) {
+    public Optional<Employee> findById(Long id) {
         try(ResultSet rs = statement.executeQuery(FIND_EMPLOYEE_BY_ID + id)) {
             rs.next();
-            return convertResultSetToEmployee(rs);
+            return Optional.of(convertResultSetToEmployee(rs));
         } catch (SQLException e) {
             System.out.println("e = " + e.getMessage());
         }
-        return null;
+        return Optional.empty();
     }
 
     @Override
