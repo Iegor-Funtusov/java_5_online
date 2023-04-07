@@ -25,6 +25,13 @@ public class EmpoloyeeDaoImpl implements EmpoloyeeDao {
     private static final String FIND_ALL_EMPLOYEES = "select * from employees";
     private static final String FIND_EMPLOYEE_BY_ID = "select * from employees where id = ";
 
+//    find all emp by java
+//    select id, first_name, last_name, age from employees join dep_emp de on employees.id = de.emp_id where de.dep_id = 1
+
+//    find all emp by not java
+//    select id, first_name, last_name, age from employees where id not in (
+//            select id from employees left join dep_emp de on employees.id = de.emp_id where de.dep_id = 1
+//    )
     @Override
     public void create(Employee employee) {
         try(PreparedStatement ps = connection.prepareStatement(CREATE_EMPLOYEE)) {
