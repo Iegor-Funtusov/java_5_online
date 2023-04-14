@@ -2,7 +2,12 @@ package ua.com.alevel.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+//import jakarta.persistence.OneToMany;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "employees")
@@ -18,6 +23,12 @@ public class Employee extends BaseEntity {
     private String email;
 
     private int age;
+
+    @ManyToMany(mappedBy = "employees")
+    private Set<Department> departments = new HashSet<>();
+
+//    @OneToMany
+//    private Set<Car> cars;
 
     public String getFirstName() {
         return firstName;
@@ -51,6 +62,14 @@ public class Employee extends BaseEntity {
         this.email = email;
     }
 
+    public Set<Department> getDepartments() {
+        return departments;
+    }
+
+    public void setDepartments(Set<Department> departments) {
+        this.departments = departments;
+    }
+
     @Override
     public String toString() {
         return "Employee{" +
@@ -59,6 +78,6 @@ public class Employee extends BaseEntity {
                 ", lastName='" + lastName + '\'' +
                 ", email='" + email + '\'' +
                 ", age=" + age +
-                "} " + super.toString();
+                "} ";
     }
 }

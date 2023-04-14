@@ -1,5 +1,7 @@
 package ua.com.alevel.dao;
 
+import ua.com.alevel.datatable.DataTableRequest;
+import ua.com.alevel.datatable.DataTableResponse;
 import ua.com.alevel.entity.BaseEntity;
 
 import java.util.Collection;
@@ -12,4 +14,5 @@ public interface BaseDao<E extends BaseEntity> {
     void delete(E e);
     Optional<E> findById(Long id);
     Collection<E> findAll();
+    DataTableResponse<E> findAll(DataTableRequest request);
 }

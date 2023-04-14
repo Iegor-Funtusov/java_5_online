@@ -1,33 +1,34 @@
 package ua.com.alevel.dao.impl;
 
 import jakarta.persistence.Query;
-import jakarta.persistence.criteria.CriteriaBuilder;
-import jakarta.persistence.criteria.CriteriaQuery;
-import jakarta.persistence.criteria.Root;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import ua.com.alevel.config.HibernateConfig;
-import ua.com.alevel.dao.EmpoloyeeDao;
+import ua.com.alevel.dao.DepartmentDao;
 import ua.com.alevel.datatable.DataTableRequest;
 import ua.com.alevel.datatable.DataTableResponse;
+import ua.com.alevel.dto.DepartmentDto;
+import ua.com.alevel.entity.Department;
 import ua.com.alevel.entity.Employee;
+import ua.com.alevel.util.DBOrderUtil;
 
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
-public class EmpoloyeeDaoImpl implements EmpoloyeeDao {
+public class DepartmentDaoImpl implements DepartmentDao {
 
     private final SessionFactory sessionFactory = HibernateConfig.getInstance().getSessionFactory();
 
     @Override
-    public void create(Employee employee) {
+    public void create(Department department) {
         Transaction transaction = null;
         try(Session session = sessionFactory.getCurrentSession()) {
             transaction = session.beginTransaction();
-            session.save(employee);
+            session.save(department);
             transaction.commit();
         } catch (Exception e) {
             System.out.println("e = " + e.getMessage());
@@ -36,11 +37,11 @@ public class EmpoloyeeDaoImpl implements EmpoloyeeDao {
     }
 
     @Override
-    public void update(Employee employee) {
+    public void update(Department department) {
         Transaction transaction = null;
         try(Session session = sessionFactory.getCurrentSession()) {
             transaction = session.beginTransaction();
-            session.update(employee);
+            session.update(department);
             transaction.commit();
         } catch (Exception e) {
             System.out.println("e = " + e.getMessage());
@@ -49,11 +50,11 @@ public class EmpoloyeeDaoImpl implements EmpoloyeeDao {
     }
 
     @Override
-    public void delete(Employee employee) {
+    public void delete(Department department) {
         Transaction transaction = null;
         try(Session session = sessionFactory.getCurrentSession()) {
             transaction = session.beginTransaction();
-            session.delete(employee);
+            session.delete(department);
             transaction.commit();
         } catch (Exception e) {
             System.out.println("e = " + e.getMessage());
@@ -62,13 +63,13 @@ public class EmpoloyeeDaoImpl implements EmpoloyeeDao {
     }
 
     @Override
-    public Optional<Employee> findById(Long id) {
+    public Optional<Department> findById(Long id) {
         Transaction transaction = null;
         try(Session session = sessionFactory.getCurrentSession()) {
             transaction = session.beginTransaction();
-            Employee employee = session.find(Employee.class, id);
+            Department department = session.find(Department.class, id);
             transaction.commit();
-            return Optional.of(employee);
+            return Optional.of(department);
         } catch (Exception e) {
             System.out.println("e = " + e.getMessage());
             rollbackTransaction(transaction);
@@ -77,14 +78,14 @@ public class EmpoloyeeDaoImpl implements EmpoloyeeDao {
     }
 
     @Override
-    public Collection<Employee> findAll() {
+    public Collection<Department> findAll() {
         Transaction transaction = null;
         try(Session session = sessionFactory.getCurrentSession()) {
             transaction = session.beginTransaction();
-            Query query = session.createQuery("from Employee");
-            List<Employee> employees = query.getResultList();
+            Query query = session.createQuery("from Department ");
+            List<Department> departments = query.getResultList();
             transaction.commit();
-            return employees;
+            return departments;
         } catch (Exception e) {
             System.out.println("e = " + e.getMessage());
             rollbackTransaction(transaction);
@@ -93,45 +94,27 @@ public class EmpoloyeeDaoImpl implements EmpoloyeeDao {
     }
 
     @Override
-    public DataTableResponse<Employee> findAll(DataTableRequest request) {
-        DataTableResponse<Employee> employeeDataTableResponse = new DataTableResponse<>();
-        Transaction transaction = null;
-        try(Session session = sessionFactory.getCurrentSession()) {
-            transaction = session.beginTransaction();
-
-            CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
-            CriteriaQuery<Employee> criteriaQuery = criteriaBuilder.createQuery(Employee.class);
-            Root<Employee> from = criteriaQuery.from(Employee.class);
-            if (request.getOrderBy().equals("desc")) {
-                criteriaQuery.orderBy(criteriaBuilder.desc(from.get(request.getSortBy())));
-            } else {
-                criteriaQuery.orderBy(criteriaBuilder.asc(from.get(request.getSortBy())));
-            }
-
-            int page = (request.getPage() - 1) * request.getSize();
-
-            List<Employee> employees = session.createQuery(criteriaQuery)
-                    .setFirstResult(page)
-                    .setMaxResults(request.getSize())
-                    .getResultList();
-
-            employeeDataTableResponse.setItems(employees);
-            employeeDataTableResponse.setPage(request.getPage());
-            employeeDataTableResponse.setSize(request.getSize());
-            employeeDataTableResponse.setOrderBy(request.getOrderBy());
-            employeeDataTableResponse.setSortBy(request.getSortBy());
-
-            transaction.commit();
-        } catch (Exception e) {
-            System.out.println("e = " + e.getMessage());
-            rollbackTransaction(transaction);
-        }
-        return employeeDataTableResponse;
+    public DataTableResponse<Department> findAll(DataTableRequest request) {
+        return null;
     }
 
     @Override
-    public boolean existsByFirstNameOrLastName(String firstName, String lastName) {
-        return false;
+    public void attachEmployeeToDepartment(Department department, Employee employee) {
+        Set<Employee> employees = department.getEmployees();
+        employees.add(employee);
+        update(department);
+    }
+
+    @Override
+    public void detachEmployeeToDepartment(Department department, Employee employee) {
+        Set<Employee> employees = department.getEmployees();
+        employees.removeIf(emp -> emp.getId().equals(employee.getId()));
+        update(department);
+    }
+
+    @Override
+    public Collection<DepartmentDto> findDepartmentStatistics(String sortBy, DBOrderUtil orderBy) {
+        return null;
     }
 
     private void rollbackTransaction(Transaction transaction) {
