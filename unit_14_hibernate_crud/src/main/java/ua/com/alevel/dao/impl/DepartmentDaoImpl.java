@@ -1,6 +1,7 @@
 package ua.com.alevel.dao.impl;
 
 import jakarta.persistence.Query;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
