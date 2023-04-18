@@ -4,6 +4,7 @@ import jakarta.persistence.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+
 import ua.com.alevel.config.HibernateConfig;
 import ua.com.alevel.dao.DepartmentDao;
 import ua.com.alevel.datatable.DataTableRequest;
