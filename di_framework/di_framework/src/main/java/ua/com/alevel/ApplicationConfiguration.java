@@ -1,5 +1,6 @@
 package ua.com.alevel;
 
+import org.apache.commons.collections4.CollectionUtils;
 import org.reflections.Reflections;
 import org.reflections.Store;
 import ua.com.alevel.configurator.BeanConfigurator;
@@ -26,22 +27,15 @@ public class ApplicationConfiguration {
                 .map(configurator -> {
                     try {
                         return configurator.getDeclaredConstructor().newInstance();
-                    } catch (InstantiationException e) {
-                        throw new RuntimeException(e);
-                    } catch (IllegalAccessException e) {
-                        throw new RuntimeException(e);
-                    } catch (InvocationTargetException e) {
-                        throw new RuntimeException(e);
-                    } catch (NoSuchMethodException e) {
+                    } catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
                         throw new RuntimeException(e);
                     }
                 })
                 .collect(Collectors.toSet());
-        for (BeanConfigurator configurator : configurators) {
-//            System.out.println("configurator = " + configurator.getClass().getName());
-            beanMap.forEach((beanClass, beanImpl) -> {
-                configurator.configure(beanImpl, beanMap);
-            });
+        if (CollectionUtils.isNotEmpty(configurators)) {
+            configurators
+                    .forEach(configurator -> beanMap
+                            .forEach((beanClass, beanImpl) -> configurator.configure(beanImpl, beanMap)));
         }
     }
 

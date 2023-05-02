@@ -1,8 +1,14 @@
 package ua.com.alevel.controller;
 
+import ua.com.alevel.annotations.Controller;
+import ua.com.alevel.annotations.ControllerMethod;
+import ua.com.alevel.annotations.ControllerParam;
 import ua.com.alevel.annotations.Inject;
 import ua.com.alevel.annotations.Service;
+import ua.com.alevel.controller.response.DataResponse;
+import ua.com.alevel.dto.EmployeeDto;
 import ua.com.alevel.entity.Employee;
+import ua.com.alevel.facade.EmployeeFacade;
 import ua.com.alevel.service.EmployeeService;
 
 import java.io.BufferedReader;
@@ -10,70 +16,38 @@ import java.io.IOException;
 import java.util.Collection;
 
 @Service
+@Controller
 public class EmployeeController {
 
     @Inject
-    private EmployeeService employeeService;
+    private EmployeeFacade employeeFacade;
 
-    public void start(BufferedReader bf) throws IOException {
-        System.out.println("Select options:");
-        String select;
-        menu();
-        while ((select = bf.readLine()) != null) {
-            crud(bf, select);
-        }
+    @ControllerMethod
+    private DataResponse<Boolean> create(@ControllerParam EmployeeDto dto) {
+        System.out.println("dto = " + dto);
+        employeeFacade.create(dto);
+        return new DataResponse<>(true);
     }
 
-    private void menu() {
-        System.out.println();
-        System.out.println("If you want create employee, please enter 1");
-        System.out.println("If you want update employee, please enter 2");
-        System.out.println("If you want delete employee, please enter 3");
-        System.out.println("If you want find employee, please enter 4");
-        System.out.println("If you want find all employees, please enter 5");
+    @ControllerMethod(position = 2)
+    private DataResponse<Boolean> update(@ControllerParam Long id, EmployeeDto dto) {
+        employeeFacade.update(dto, id);
+        return new DataResponse<>(true);
     }
 
-    private void crud(BufferedReader reader, String select) throws IOException {
-        switch (select) {
-            case "1" -> create(reader);
-            case "2" -> update(reader);
-            case "3" -> delete(reader);
-            case "4" -> findById(reader);
-            case "5" -> findAll();
-        }
-        menu();
+    @ControllerMethod(position = 3)
+    private DataResponse<Boolean> delete(@ControllerParam Long id) {
+        employeeFacade.delete(id);
+        return new DataResponse<>(true);
     }
 
-    private void create(BufferedReader reader) throws IOException {
-        System.out.println("Please enter the first name:");
-        String firstName = reader.readLine();
-        System.out.println("Please enter the last name:");
-        String lastName = reader.readLine();
-        System.out.println("Please enter the age:");
-        String stringAge = reader.readLine();
-        int age = Integer.parseInt(stringAge);
-        Employee employee = new Employee();
-        employee.setFirstName(firstName);
-        employee.setLastName(lastName);
-        employee.setAge(age);
-        employeeService.create(employee);
+    @ControllerMethod(position = 4)
+    private DataResponse<Employee> findById(@ControllerParam Long id) {
+        return new DataResponse<>(employeeFacade.findById(id));
     }
 
-    private void update(BufferedReader reader) throws IOException {}
-
-    private void delete(BufferedReader reader) throws IOException {}
-
-    private void findById(BufferedReader reader) throws IOException {
-        System.out.println("Please enter the id:");
-        String id = reader.readLine();
-        Employee employee = employeeService.findById(Long.parseLong(id));
-        System.out.println("employee = " + employee);
-    }
-
-    private void findAll() {
-        Collection<Employee> employees = employeeService.findAll();
-        for (Employee employee : employees) {
-            System.out.println("employee = " + employee);
-        }
+    @ControllerMethod(position = 5)
+    private DataResponse<Collection<Employee>> findAll() {
+        return new DataResponse<>(employeeFacade.findAll());
     }
 }
