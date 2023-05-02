@@ -10,7 +10,12 @@ import ua.com.alevel.service.EmployeeService;
 import java.util.Collection;
 
 @Service
+//@Deprecated
 public class EmployeeFacadeImpl implements EmployeeFacade {
+
+    public EmployeeFacadeImpl() {
+        System.out.println("EmployeeFacadeImpl.EmployeeFacadeImpl");
+    }
 
     @Inject
     private EmployeeService employeeService;

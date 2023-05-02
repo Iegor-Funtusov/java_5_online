@@ -27,24 +27,27 @@ public class BeanFactory {
                         Set<String> beanClasses = value;
                         beanClasses.forEach(bean -> {
                             try {
+//                                System.out.println("bean = " + bean);
                                 Class<?> beanClass = Class.forName(bean);
-                                Class<?>[] interfaces = beanClass.getInterfaces();
-                                if (ArrayUtils.isNotEmpty(interfaces)) {
-                                    Class<?> beanKey = null;
-                                    if (interfaces.length == 1) {
-                                        beanKey = interfaces[0];
-                                    } else {
-                                        for (Class<?> anInterface : interfaces) {
-                                            if (anInterface.getSimpleName().startsWith(beanClass.getSimpleName())) {
-                                                beanKey = anInterface;
+                                if (!beanClass.isAnnotationPresent(Deprecated.class)) {
+                                    Class<?>[] interfaces = beanClass.getInterfaces();
+                                    if (ArrayUtils.isNotEmpty(interfaces)) {
+                                        Class<?> beanKey = null;
+                                        if (interfaces.length == 1) {
+                                            beanKey = interfaces[0];
+                                        } else {
+                                            for (Class<?> anInterface : interfaces) {
+                                                if (anInterface.getSimpleName().startsWith(beanClass.getSimpleName())) {
+                                                    beanKey = anInterface;
+                                                }
                                             }
                                         }
+                                        Object createdBean = beanClass.getDeclaredConstructor().newInstance();
+                                        beanMap.put(beanKey, createdBean);
+                                    } else {
+                                        Object createdBean = beanClass.getDeclaredConstructor().newInstance();
+                                        beanMap.put(beanClass, createdBean);
                                     }
-                                    Object createdBean = beanClass.getDeclaredConstructor().newInstance();
-                                    beanMap.put(beanKey, createdBean);
-                                } else {
-                                    Object createdBean = beanClass.getDeclaredConstructor().newInstance();
-                                    beanMap.put(beanClass, createdBean);
                                 }
                             } catch (ClassNotFoundException e) {
                                 System.out.println("error bean created: " + e.getMessage());
