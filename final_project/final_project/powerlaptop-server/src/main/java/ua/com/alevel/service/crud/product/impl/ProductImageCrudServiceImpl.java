@@ -10,6 +10,8 @@ import ua.com.alevel.persistence.sql.repository.product.ProductImageRepository;
 import ua.com.alevel.service.crud.CrudHelperService;
 import ua.com.alevel.service.crud.product.ProductImageCrudService;
 
+import java.util.Set;
+
 @Service
 @Transactional
 public class ProductImageCrudServiceImpl implements ProductImageCrudService {
@@ -45,5 +47,10 @@ public class ProductImageCrudServiceImpl implements ProductImageCrudService {
     @Override
     public Page<ProductImage> findAll(DataTableRequest request) {
         return crudHelperService.findAll(request, productImageRepository);
+    }
+
+    @Override
+    public Set<ProductImage> findAllByIdIn(Set<Long> ids) {
+        return productImageRepository.findAllByIdIn(ids);
     }
 }

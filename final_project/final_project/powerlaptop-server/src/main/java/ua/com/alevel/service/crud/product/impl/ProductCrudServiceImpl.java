@@ -10,6 +10,8 @@ import ua.com.alevel.persistence.sql.repository.product.ProductRepository;
 import ua.com.alevel.service.crud.CrudHelperService;
 import ua.com.alevel.service.crud.product.ProductCrudService;
 
+import java.util.Collection;
+
 @Service
 @Transactional
 public class ProductCrudServiceImpl implements ProductCrudService {
@@ -45,5 +47,10 @@ public class ProductCrudServiceImpl implements ProductCrudService {
     @Override
     public Page<Product> findAll(DataTableRequest request) {
         return crudHelperService.findAll(request, productRepository);
+    }
+
+    @Override
+    public Collection<Product> findAll() {
+        return productRepository.findAll();
     }
 }

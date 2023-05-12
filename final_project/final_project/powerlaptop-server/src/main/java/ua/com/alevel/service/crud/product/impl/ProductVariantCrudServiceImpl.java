@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import ua.com.alevel.data.datatable.DataTableRequest;
+import ua.com.alevel.persistence.sql.entity.product.Product;
 import ua.com.alevel.persistence.sql.entity.product.ProductVariant;
 import ua.com.alevel.persistence.sql.repository.product.ProductVariantRepository;
 import ua.com.alevel.service.crud.CrudHelperService;
@@ -45,5 +46,12 @@ public class ProductVariantCrudServiceImpl implements ProductVariantCrudService 
     @Override
     public Page<ProductVariant> findAll(DataTableRequest request) {
         return crudHelperService.findAll(request, productVariantRepository);
+    }
+
+    @Override
+    public ProductVariant findByProduct(Product product) {
+        return productVariantRepository
+                .findByProduct(product)
+                .orElseThrow(() -> new RuntimeException("Product variant not found by product id: " + product.getId()));
     }
 }

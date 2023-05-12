@@ -42,7 +42,7 @@ public class CrudHelperServiceImpl<E extends BaseEntity, R extends BaseEntityRep
 
     @Override
     public E findById(Long id, R repository) {
-        return repository.findById(id).orElseThrow(() -> new RuntimeException("Entity not found"));
+        return repository.findById(id).orElseThrow(() -> new EntityNotFoundException("Entity not found"));
     }
 
     @Override
