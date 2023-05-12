@@ -37,11 +37,14 @@ public class ProductVariant extends BaseEntity {
     private String color;
 
     @Column(name = "display_resolution", nullable = false)
-    private Integer displayResolution;
+    private String displayResolution;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "display_type", nullable = false)
     private DisplayType displayType;
+
+    @Column(name = "display_size", nullable = false)
+    private String displaySize;
 
     @ManyToOne
     private Product product;

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
 import ua.com.alevel.data.datatable.DataTableRequest;
 import ua.com.alevel.data.datatable.DataTableResponse;
 import ua.com.alevel.data.dto.product.ProductDto;
@@ -19,11 +20,11 @@ import ua.com.alevel.facade.crud.ProductCrudFacade;
 
 @RestController
 @RequestMapping("/products")
-public class ProductController {
+public class ProductCrudController {
 
     private final ProductCrudFacade productCrudFacade;
 
-    public ProductController(ProductCrudFacade productCrudFacade) {
+    public ProductCrudController(ProductCrudFacade productCrudFacade) {
         this.productCrudFacade = productCrudFacade;
     }
 
