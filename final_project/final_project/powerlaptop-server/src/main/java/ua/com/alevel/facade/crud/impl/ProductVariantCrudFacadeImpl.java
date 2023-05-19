@@ -60,8 +60,5 @@ public class ProductVariantCrudFacadeImpl implements ProductVariantCrudFacade {
         productVariant.setRam(dto.getRam());
         productVariant.setSsd(dto.getSsd());
         productVariant.setColor(dto.getColor());
-        productVariant.setDisplayResolution(dto.getDisplayResolution());
-        productVariant.setDisplayType(dto.getDisplayType());
-        productVariant.setDisplaySize(dto.getDisplaySize());
     }
 }

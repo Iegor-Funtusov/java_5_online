@@ -11,8 +11,11 @@ import lombok.Getter;
 import lombok.Setter;
 
 import ua.com.alevel.persistence.sql.entity.BaseEntity;
-import ua.com.alevel.persistence.sql.type.DisplayType;
 import ua.com.alevel.persistence.sql.type.OsType;
+
+import jakarta.validation.constraints.Digits;
+
+import java.math.BigDecimal;
 
 @Getter
 @Setter
@@ -36,16 +39,34 @@ public class ProductVariant extends BaseEntity {
     @Column(nullable = false)
     private String color;
 
-    @Column(name = "display_resolution", nullable = false)
-    private String displayResolution;
+    @Column(nullable = false)
+    private String battery;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "display_type", nullable = false)
-    private DisplayType displayType;
+    @Column(nullable = false)
+    private String camera;
 
-    @Column(name = "display_size", nullable = false)
-    private String displaySize;
+    @Column(nullable = false)
+    @Digits(integer = 6, fraction = 2)
+    private BigDecimal price;
+
+    @Column(nullable = false)
+    private String wireless;
+
+    @Column(nullable = false)
+    private Double height;
+
+    @Column(nullable = false)
+    private Double width;
+
+    @Column(nullable = false)
+    private Double depth;
+
+    @Column(nullable = false)
+    private Double weight;
 
     @ManyToOne
     private Product product;
+
+    @ManyToOne
+    private ProductDisplay productDisplay;
 }

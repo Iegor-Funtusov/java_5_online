@@ -16,14 +16,14 @@ import java.util.Set;
 public class ProductPLPDto {
 
     private Long id;
-    private ProductBrandType productBrand;
+    private String productBrand;
     private String name;
     private String image;
     private String price = "100.00";
 
     public ProductPLPDto(Product product) {
         this.id = product.getId();
-        this.productBrand = product.getProductBrand();
+        this.productBrand = product.getProductBrand().getBrandType();
         this.name = product.getName();
         Set<ProductImage> productImages = product.getProductImages();
         if (CollectionUtils.isNotEmpty(productImages)) {

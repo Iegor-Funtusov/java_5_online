@@ -3,8 +3,11 @@ package ua.com.alevel.data.dto.product;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
 import org.apache.commons.collections4.CollectionUtils;
+
 import ua.com.alevel.persistence.sql.entity.product.Product;
+import ua.com.alevel.persistence.sql.entity.product.ProductDisplay;
 import ua.com.alevel.persistence.sql.entity.product.ProductImage;
 import ua.com.alevel.persistence.sql.entity.product.ProductVariant;
 import ua.com.alevel.persistence.sql.type.DisplayType;
@@ -48,8 +51,11 @@ public class ProductPDPDto {
         this.ram = productVariant.getRam();
         this.ssd = productVariant.getSsd();
         this.color = productVariant.getColor();
-        this.displayResolution = productVariant.getDisplayResolution();
-        this.displayType = productVariant.getDisplayType();
-        this.displaySize = productVariant.getDisplaySize();
+        ProductDisplay productDisplay = productVariant.getProductDisplay();
+        if (productDisplay != null) {
+            this.displayResolution = productDisplay.getDisplayResolution();
+            this.displayType = productDisplay.getDisplayType();
+            this.displaySize = productDisplay.getDisplaySize();
+        }
     }
 }
