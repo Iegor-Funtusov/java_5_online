@@ -6,13 +6,12 @@ import {DataContainer} from "../models/data.container";
 @Injectable({
   providedIn: 'root'
 })
-export class PlpService {
+export class PdpService {
 
-  constructor(private _http: HttpClient) {
-  }
+  constructor(private _http: HttpClient) { }
 
-  loadProducts(): Observable<Object> {
-    return this._http.get('http://localhost:8080/products/plp')
+  loadProductById(productId: string): Observable<any> {
+    return this._http.get('http://localhost:8080/products/' + productId + '/pdp')
       .pipe(
         map(res => {
           const data: DataContainer = res as DataContainer;

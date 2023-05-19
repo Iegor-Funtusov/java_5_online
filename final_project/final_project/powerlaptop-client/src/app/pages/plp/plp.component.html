@@ -1,7 +1,7 @@
 <ng-container *ngIf="plpList$ | async as plpList">
   <div class="d-flex flex-wrap justify-content-center">
     <div class="p-0" *ngFor="let product of plpList">
-      <div class="card product-info" style="width: 18rem;">
+      <div class="card product-info" style="width: 18rem;" (click)="redirectToPdp(product.id)">
         <div class="product-image">
           <img src="{{ product.image }}" class="card-img-top" alt="...">
         </div>
@@ -9,7 +9,7 @@
           <h5 class="card-title">{{ product.productBrand }}</h5>
           <p class="card-text">{{ product.name }}</p>
           <p class="card-text">{{ product.price }}</p>
-          <a href="#" class="btn btn-primary">Купить</a>
+          <a href="#" class="btn btn-primary">Buy</a>
         </div>
       </div>
     </div>

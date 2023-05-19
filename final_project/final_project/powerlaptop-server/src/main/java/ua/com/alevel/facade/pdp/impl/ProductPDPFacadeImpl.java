@@ -9,6 +9,8 @@ import ua.com.alevel.persistence.sql.entity.product.ProductVariant;
 import ua.com.alevel.service.crud.product.ProductCrudService;
 import ua.com.alevel.service.crud.product.ProductVariantCrudService;
 
+import java.util.Collection;
+
 @Service
 public class ProductPDPFacadeImpl implements ProductPDPFacade {
 
@@ -25,7 +27,7 @@ public class ProductPDPFacadeImpl implements ProductPDPFacade {
     @Override
     public ProductPDPDto findById(Long id) {
         Product product = productCrudService.findById(id);
-        ProductVariant productVariant = productVariantCrudService.findByProduct(product);
-        return new ProductPDPDto(product, productVariant);
+        Collection<ProductVariant> productVariants = productVariantCrudService.findByProduct(product);
+        return new ProductPDPDto(product, productVariants);
     }
 }
