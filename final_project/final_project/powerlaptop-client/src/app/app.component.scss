@@ -2,10 +2,6 @@
   margin-right: 0 !important;
 }
 
-form {
-  width: 100%;
-}
-
 .user-action {
   margin-left: 1em;
 
@@ -16,4 +12,8 @@ form {
 
 .app-content {
   margin-bottom: 4em;
+}
+
+app-search {
+  width: 100%;
 }
