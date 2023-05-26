@@ -11,6 +11,8 @@ import ua.com.alevel.persistence.sql.repository.BaseEntityRepository;
 import ua.com.alevel.service.crud.CrudHelperService;
 import ua.com.alevel.util.PersistenceUtil;
 
+import static ua.com.alevel.util.ExceptionUtil.ENTITY_NOT_FOUND;
+
 @Service
 @Transactional
 public class CrudHelperServiceImpl<E extends BaseEntity, R extends BaseEntityRepository<E>>
@@ -19,7 +21,7 @@ public class CrudHelperServiceImpl<E extends BaseEntity, R extends BaseEntityRep
     @Override
     public void checkExists(Long id, R repository) {
         if (!repository.existsById(id)) {
-            throw new EntityNotFoundException("Entity not found");
+            throw new EntityNotFoundException(ENTITY_NOT_FOUND);
         }
     }
 
