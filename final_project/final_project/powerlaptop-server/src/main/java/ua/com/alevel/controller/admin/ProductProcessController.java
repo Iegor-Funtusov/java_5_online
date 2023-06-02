@@ -1,4 +1,4 @@
-package ua.com.alevel.controller;
+package ua.com.alevel.controller.admin;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -11,7 +11,7 @@ import ua.com.alevel.data.response.DataContainer;
 import ua.com.alevel.facade.process.ProductProcessFacade;
 
 @RestController
-@RequestMapping("/products/{id}/process")
+@RequestMapping("/api/admin/products/{id}/process")
 public class ProductProcessController {
 
     private final ProductProcessFacade productProcessFacade;

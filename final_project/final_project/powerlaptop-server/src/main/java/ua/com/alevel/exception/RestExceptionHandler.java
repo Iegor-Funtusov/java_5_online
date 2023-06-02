@@ -15,6 +15,11 @@ public class RestExceptionHandler {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new DataContainer<>(exception.getMessage()));
     }
 
+    @ExceptionHandler(value = UserExistException.class)
+    public ResponseEntity<DataContainer<String>> handleUserExistException(UserExistException exception) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new DataContainer<>(exception.getMessage()));
+    }
+
     @ExceptionHandler(value = RuntimeException.class)
     public ResponseEntity<DataContainer<String>> handleRuntimeException(RuntimeException exception) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new DataContainer<>(exception.getMessage()));

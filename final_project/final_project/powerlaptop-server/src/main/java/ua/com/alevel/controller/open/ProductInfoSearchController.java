@@ -1,4 +1,4 @@
-package ua.com.alevel.controller;
+package ua.com.alevel.controller.open;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,7 +13,7 @@ import ua.com.alevel.service.crud.product.ProductInfoSearchService;
 import java.util.Collection;
 
 @RestController
-@RequestMapping("/products/search")
+@RequestMapping("/api/products/search")
 public class ProductInfoSearchController {
 
     private final ProductInfoSearchService productInfoSearchService;

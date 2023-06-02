@@ -1,4 +1,4 @@
-package ua.com.alevel.controller;
+package ua.com.alevel.controller.admin;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,7 +19,7 @@ import ua.com.alevel.data.response.DataContainer;
 import ua.com.alevel.facade.crud.ProductCrudFacade;
 
 @RestController
-@RequestMapping("/products")
+@RequestMapping("/api/admin/products")
 public class ProductCrudController {
 
     private final ProductCrudFacade productCrudFacade;

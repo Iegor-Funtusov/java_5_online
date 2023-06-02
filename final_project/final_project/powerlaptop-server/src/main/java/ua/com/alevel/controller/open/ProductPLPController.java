@@ -1,4 +1,4 @@
-package ua.com.alevel.controller;
+package ua.com.alevel.controller.open;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,7 +12,7 @@ import ua.com.alevel.facade.plp.ProductPLPFacade;
 import java.util.Collection;
 
 @RestController
-@RequestMapping("/products/plp")
+@RequestMapping("/api/products/plp")
 public class ProductPLPController {
 
     private final ProductPLPFacade productPLPFacade;

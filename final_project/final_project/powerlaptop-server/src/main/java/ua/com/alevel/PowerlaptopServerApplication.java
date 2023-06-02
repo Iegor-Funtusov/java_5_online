@@ -8,6 +8,8 @@ import org.springframework.context.event.EventListener;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import ua.com.alevel.persistence.sql.entity.user.Admin;
+import ua.com.alevel.persistence.sql.repository.user.AdminRepository;
 
 //@EnableScheduling
 @SpringBootApplication
@@ -15,6 +17,9 @@ public class PowerlaptopServerApplication {
 
     @Autowired
     private PasswordEncoder encoder;
+
+    @Autowired
+    private AdminRepository adminRepository;
 
     public static void main(String[] args) {
         SpringApplication.run(PowerlaptopServerApplication.class, args);
@@ -37,5 +42,13 @@ public class PowerlaptopServerApplication {
 
         System.out.println("valid = " + encoder.matches(password, hash));
         System.out.println("valid = " + encoder.matches(password, hash1));
+
+        String adminName = "admin@mail.com";
+        if (!adminRepository.existsByUsername(adminName)) {
+            Admin admin = new Admin();
+            admin.setUsername(adminName);
+            admin.setPassword(encoder.encode("12345678"));
+            adminRepository.save(admin);
+        }
     }
 }
