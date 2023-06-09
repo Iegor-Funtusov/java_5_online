@@ -15,10 +15,10 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+
 import ua.com.alevel.config.security.AuthTokenFilter;
 import ua.com.alevel.config.security.HandlerAccessDeniedHandler;
 import ua.com.alevel.config.security.HandlerAuthenticationEntryPoint;
-import ua.com.alevel.persistence.sql.type.RoleType;
 
 @Configuration
 @EnableWebSecurity
@@ -60,7 +60,6 @@ public class SecurityConfig {
 
     @Bean // (4)
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        // @formatter:off
         http
                 .csrf().disable()
 
@@ -86,19 +85,8 @@ public class SecurityConfig {
                         "/swagger-resources/**",
                         "/configuration/security",
                         "/webjars/**").permitAll()
-                .requestMatchers("/api/admin/**").hasRole("ROLE_ADMIN")
+//                .requestMatchers("/api/admin/**").hasAnyRole(RoleType.ROLE_ADMIN.name())
                 .requestMatchers("/api/**").authenticated();
-//                .authorizeHttpRequests(auth -> auth
-//                        .requestMatchers(WHITE_LIST_API).permitAll()
-//                        .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-//                        .requestMatchers(
-//                                "/configuration/ui",
-//                                "/swagger-resources/**",
-//                                "/configuration/security",
-//                                "/webjars/**").permitAll()
-//                        .requestMatchers("/api/admin/**").hasRole("ADMIN")
-//                        .requestMatchers("/api/**").authenticated());
-        // @formatter:on
         return http.build();
     }
 }

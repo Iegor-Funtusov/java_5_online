@@ -11,7 +11,7 @@ export class PdpService {
   constructor(private _http: HttpClient) { }
 
   loadProductById(productId: string): Observable<any> {
-    return this._http.get('http://localhost:8080/products/' + productId + '/pdp')
+    return this._http.get('http://localhost:8080/api/products/' + productId + '/pdp')
       .pipe(
         map(res => {
           const data: DataContainer = res as DataContainer;

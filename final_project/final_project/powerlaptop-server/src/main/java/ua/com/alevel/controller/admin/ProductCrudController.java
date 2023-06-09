@@ -53,10 +53,10 @@ public class ProductCrudController {
 
     @GetMapping
     public ResponseEntity<DataContainer<DataTableResponse<ProductDto>>> findAll(
-            @RequestParam int page,
-            @RequestParam int size,
-            @RequestParam String sort,
-            @RequestParam String order) {
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size,
+            @RequestParam(defaultValue = "desc") String sort,
+            @RequestParam(defaultValue = "id") String order) {
         DataTableRequest request = new DataTableRequest();
         request.setPage(page);
         request.setSize(size);

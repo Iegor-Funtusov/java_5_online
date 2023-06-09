@@ -11,7 +11,7 @@ export class ProductSearchService {
   constructor(private _http: HttpClient) { }
 
   searchProduct(query: string): Observable<any> {
-    return this._http.get('http://localhost:8080/products/search?query=' + query)
+    return this._http.get('http://localhost:8080/api/products/search?query=' + query)
       .pipe(
         map(res => {
           const data: DataContainer = res as DataContainer;

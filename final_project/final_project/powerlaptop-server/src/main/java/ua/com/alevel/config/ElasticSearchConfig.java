@@ -5,7 +5,4 @@ import org.springframework.data.elasticsearch.repository.config.EnableElasticsea
 
 @Configuration
 @EnableElasticsearchRepositories("ua.com.alevel.persistence.elasticsearch.repository")
-public class ElasticSearchConfig {
-
-
-}
+public class ElasticSearchConfig { }

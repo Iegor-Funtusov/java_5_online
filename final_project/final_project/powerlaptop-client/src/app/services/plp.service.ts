@@ -12,7 +12,7 @@ export class PlpService {
   }
 
   loadProducts(): Observable<Object> {
-    return this._http.get('http://localhost:8080/products/plp')
+    return this._http.get('http://localhost:8080/api/products/plp')
       .pipe(
         map(res => {
           const data: DataContainer = res as DataContainer;
