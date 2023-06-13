@@ -18,6 +18,7 @@
 
     <modules>
         <module>powerlaptop-server</module>
+        <module>powerlaptop_supplier</module>
     </modules>
 
     <properties>

@@ -1,18 +1,23 @@
 package ua.com.alevel.persistence.sql.entity.user;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import ua.com.alevel.persistence.sql.entity.BaseEntity;
+import ua.com.alevel.persistence.sql.entity.token.Token;
 import ua.com.alevel.persistence.sql.listener.FullNameGenerationListener;
 import ua.com.alevel.persistence.sql.type.RoleType;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Set;
 
+@Builder
 @Getter
 @Setter
 @Entity
@@ -20,6 +25,7 @@ import java.util.Set;
 @EntityListeners({
         FullNameGenerationListener.class
 })
+@AllArgsConstructor
 public class User extends BaseEntity implements UserDetails {
 
     @Column(nullable = false, unique = true)
@@ -43,6 +49,9 @@ public class User extends BaseEntity implements UserDetails {
     @Column(name = "role_type", nullable = false)
     private RoleType roleType;
 
+    @OneToMany(mappedBy = "user")
+    private List<Token> tokens;
+
     @Column(name = "account_non_expired")
     private boolean accountNonExpired;
 
@@ -62,7 +71,7 @@ public class User extends BaseEntity implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Set.of(new SimpleGrantedAuthority(roleType.name()));
+        return roleType.getAuthorities();
     }
 
     @Override

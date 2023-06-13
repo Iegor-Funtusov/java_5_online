@@ -9,6 +9,7 @@ import ua.com.alevel.persistence.sql.entity.product.ProductVariant;
 import ua.com.alevel.persistence.sql.repository.BaseEntityRepository;
 
 import java.util.Collection;
+import java.util.List;
 
 @Repository
 public interface ProductVariantRepository extends BaseEntityRepository<ProductVariant> {
@@ -18,4 +19,6 @@ public interface ProductVariantRepository extends BaseEntityRepository<ProductVa
 //    @Query(value = "select distinct cpu, color, product_id from product_variants", nativeQuery = true)
     @Query(value = "select distinct new ua.com.alevel.persistence.sql.dto.ProductVariantMinDto(pv.cpu, pv.color, pv.product) from ProductVariant as pv")
     Collection<ProductVariantMinDto> find();
+
+    List<ProductVariant> findAllByCodeIn(List<String> codes);
 }

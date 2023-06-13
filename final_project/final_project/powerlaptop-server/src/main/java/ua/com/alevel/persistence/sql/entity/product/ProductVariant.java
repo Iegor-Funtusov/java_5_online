@@ -64,6 +64,12 @@ public class ProductVariant extends BaseEntity {
     @Column(nullable = false)
     private Double weight;
 
+    @Column(nullable = false)
+    private Integer quantity;
+
+    @Column(nullable = false, unique = true)
+    private String code;
+
     @ManyToOne
     private Product product;
 

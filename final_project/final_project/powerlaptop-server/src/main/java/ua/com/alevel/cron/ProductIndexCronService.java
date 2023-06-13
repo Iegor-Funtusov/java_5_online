@@ -29,7 +29,7 @@ public class ProductIndexCronService {
         this.elasticsearchOperations = elasticsearchOperations;
     }
 
-    @Scheduled(cron = "*/10 * * * * *")
+//    @Scheduled(cron = "*/10 * * * * *")
     public void syncToElastic() {
         elasticsearchOperations.indexOps(ProductIndex.class).refresh();
         productIndexRepository.deleteAll();
