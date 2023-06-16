@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, ReactiveFormsModule, Validators} from "@angular/forms";
-import {map, Observable} from "rxjs";
+import {flatMap, map, Observable, switchAll, switchMap, switchMapTo, tap} from "rxjs";
 import {CommonModule} from "@angular/common";
 import {SessionService} from "../../services/session.service";
 import {RegisterService} from "../../services/register.service";
@@ -9,7 +9,6 @@ import {Route, Router} from "@angular/router";
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
-  styleUrls: ['./register.component.scss'],
   imports: [
     ReactiveFormsModule,
     CommonModule
@@ -33,7 +32,34 @@ export class RegisterComponent implements OnInit{
     private _sessionService: SessionService, private _router: Router) {
   }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
+    this.form.valueChanges.subscribe(
+      value => {
+        if (value.username?.includes('idiot')) {
+          alert("what are you doing???")
+        }
+      }
+    );
+
+    this.form.statusChanges
+      .pipe(
+        tap(value => console.log(value)),
+        map(value => {
+          if (value === 'VALID') {
+            return 1;
+          }
+          if (value === 'INVALID') {
+            return 2;
+          }
+          return 0
+        }),
+        tap(value => {
+          console.log("after")
+          console.log(value)
+        }),
+      )
+      .subscribe();
+  }
 
   register(): void {
     let value = this.form.value;
