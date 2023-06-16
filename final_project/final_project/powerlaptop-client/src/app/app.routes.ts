@@ -15,5 +15,10 @@ export const APP_ROUTES: Routes = [
     path: 'pdp',
     pathMatch: 'prefix',
     loadChildren:() => import('./pages/pdp/pdp.routes').then(m => m.PDP_ROUTES)
+  },
+  {
+    path: 'register',
+    pathMatch: 'prefix',
+    loadChildren:() => import('./pages/register/register.router').then(m => m.REGISTER_ROUTES)
   }
 ];

@@ -53,6 +53,6 @@ public class PowerlaptopServerApplication {
         }
 //        exportCSVService.export();
 
-        syncSupplierService.sync();
+//        syncSupplierService.sync();
     }
 }
