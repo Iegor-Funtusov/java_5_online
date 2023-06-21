@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from "@angular/router";
-import { AppSearchComponent } from "./components/app-search/app-search.component";
+import { FooterComponent } from "./layout/footer/footer.component";
+import {HeaderComponent} from "./layout/header/header.component";
 
 @Component({
   selector: 'app-root',
@@ -8,7 +9,8 @@ import { AppSearchComponent } from "./components/app-search/app-search.component
   templateUrl: './app.component.html',
   imports: [
     RouterOutlet,
-    AppSearchComponent
+    FooterComponent,
+    HeaderComponent
   ],
   styleUrls: ['./app.component.scss']
 })

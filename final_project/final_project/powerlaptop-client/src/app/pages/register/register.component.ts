@@ -5,7 +5,7 @@ import { CommonModule } from "@angular/common";
 import { map, Observable, tap } from "rxjs";
 
 import { SessionService } from "../../services/session.service";
-import { RegisterService } from "../../services/register.service";
+import { AuthService } from "../../services/auth.service";
 
 @Component({
   selector: 'app-register',
@@ -29,18 +29,18 @@ export class RegisterComponent implements OnInit{
 
   constructor(
     private _fb: FormBuilder,
-    private _registerService: RegisterService,
+    private _registerService: AuthService,
     private _sessionService: SessionService, private _router: Router) {
   }
 
   ngOnInit(): void {
-    this.form.valueChanges.subscribe(
-      value => {
-        if (value.username?.includes('idiot')) {
-          alert("what are you doing???")
-        }
-      }
-    );
+    // this.form.valueChanges.subscribe(
+    //   value => {
+    //     if (value.username?.includes('idiot')) {
+    //       alert("what are you doing???")
+    //     }
+    //   }
+    // );
 
     this.form.statusChanges
       .pipe(
