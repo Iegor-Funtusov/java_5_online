@@ -1,10 +1,11 @@
-import {Component, OnInit} from '@angular/core';
-import {Router} from "@angular/router";
-import {PdpService} from "../../services/pdp.service";
-import {ProductPdpModel} from "../../models/product-pdp.model";
-import {CommonModule} from "@angular/common";
-import {BehaviorSubject, Observable, take, tap} from "rxjs";
-import {defaultProductResultModel, ProductResultModel} from "../../models/product-result.model";
+import { Component, OnInit } from '@angular/core';
+import { Router } from "@angular/router";
+import { CommonModule } from "@angular/common";
+import { BehaviorSubject, Observable, take, tap } from "rxjs";
+
+import { PdpService } from "../../services/pdp.service";
+import { ProductPdpModel } from "../../models/product-pdp.model";
+import { defaultProductResultModel, ProductResultModel } from "../../models/product-result.model";
 
 @Component({
   selector: 'app-pdp',

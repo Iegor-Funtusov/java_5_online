@@ -1,9 +1,10 @@
-import {Component, OnInit} from '@angular/core';
-import {PlpService} from "../../services/plp.service";
-import {ProductPlpModel} from "../../models/product-plp.model";
-import {AsyncPipe, JsonPipe, NgForOf, NgIf} from "@angular/common";
-import {Observable} from "rxjs";
-import {Router} from "@angular/router";
+import { Component, OnInit } from '@angular/core';
+import { Router } from "@angular/router";
+import { AsyncPipe, JsonPipe, NgForOf, NgIf } from "@angular/common";
+import { Observable } from "rxjs";
+
+import { PlpService } from "../../services/plp.service";
+import { ProductPlpModel } from "../../models/product-plp.model";
 
 @Component({
   selector: 'app-plp',

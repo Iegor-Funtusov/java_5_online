@@ -1,6 +1,6 @@
-import {inject, Inject, Injectable, InjectionToken, OnDestroy} from "@angular/core";
-import {DOCUMENT} from '@angular/common';
-import {BehaviorSubject, Observable} from "rxjs";
+import { inject, Inject, Injectable, InjectionToken, OnDestroy } from "@angular/core";
+import { DOCUMENT } from '@angular/common';
+import { BehaviorSubject, map, Observable } from "rxjs";
 
 export const WINDOW = new InjectionToken<Window>(
   'An abstraction over global window object',
@@ -46,6 +46,12 @@ export class SessionService extends Observable<Map<string, string>> implements O
   removeFromStorage(itName:string){
     itName && this._localStorage.removeItem(itName);
     this._entireStorage$.next(this._allStorage());
+  }
+
+  fromStorage(key: string): Observable<string | undefined> {
+    return this._entireStorage$
+        .pipe(
+            map(map1 => map1.get(key)));
   }
 
   private _allStorage(): Map<string, string> {

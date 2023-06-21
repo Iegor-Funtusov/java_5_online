@@ -13,7 +13,7 @@ import ua.com.alevel.service.crud.product.ProductInfoSearchService;
 import java.util.Collection;
 
 @RestController
-@RequestMapping("/api/products/search")
+@RequestMapping("/api/open/products/search")
 public class ProductInfoSearchController {
 
     private final ProductInfoSearchService productInfoSearchService;

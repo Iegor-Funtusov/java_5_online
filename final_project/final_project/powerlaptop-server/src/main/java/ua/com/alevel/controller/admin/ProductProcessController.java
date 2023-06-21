@@ -11,7 +11,7 @@ import ua.com.alevel.data.response.DataContainer;
 import ua.com.alevel.facade.process.ProductProcessFacade;
 
 @RestController
-@RequestMapping("/api/admin/products/{id}/process")
+@RequestMapping("/api/private/admin/products/{id}/process")
 public class ProductProcessController {
 
     private final ProductProcessFacade productProcessFacade;

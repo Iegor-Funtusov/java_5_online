@@ -12,7 +12,7 @@ import ua.com.alevel.facade.plp.ProductPLPFacade;
 import java.util.Collection;
 
 @RestController
-@RequestMapping("/api/products/plp")
+@RequestMapping("/api/open/products/plp")
 public class ProductPLPController {
 
     private final ProductPLPFacade productPLPFacade;

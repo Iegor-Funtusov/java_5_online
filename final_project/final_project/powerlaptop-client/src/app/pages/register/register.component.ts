@@ -1,10 +1,11 @@
-import {Component, OnInit} from '@angular/core';
-import {FormBuilder, ReactiveFormsModule, Validators} from "@angular/forms";
-import {flatMap, map, Observable, switchAll, switchMap, switchMapTo, tap} from "rxjs";
-import {CommonModule} from "@angular/common";
-import {SessionService} from "../../services/session.service";
-import {RegisterService} from "../../services/register.service";
-import {Route, Router} from "@angular/router";
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, ReactiveFormsModule, Validators } from "@angular/forms";
+import { Router } from "@angular/router";
+import { CommonModule } from "@angular/common";
+import { map, Observable, tap } from "rxjs";
+
+import { SessionService } from "../../services/session.service";
+import { RegisterService } from "../../services/register.service";
 
 @Component({
   selector: 'app-register',

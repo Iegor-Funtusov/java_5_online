@@ -10,7 +10,7 @@ import ua.com.alevel.data.response.DataContainer;
 import ua.com.alevel.facade.pdp.ProductPDPFacade;
 
 @RestController
-@RequestMapping("/api/products/{id}/pdp")
+@RequestMapping("/api/open/products/{id}/pdp")
 public class ProductPDPController {
 
     private final ProductPDPFacade productPDPFacade;

@@ -23,7 +23,7 @@ import ua.com.alevel.facade.user.RegistrationFacade;
 import java.io.IOException;
 
 @RestController
-@RequestMapping("/api/v1/auth")
+@RequestMapping("/api/open/auth")
 @RequiredArgsConstructor
 public class AccountController {
 

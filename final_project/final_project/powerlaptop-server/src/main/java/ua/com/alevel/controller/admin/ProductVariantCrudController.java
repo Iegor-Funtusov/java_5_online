@@ -20,7 +20,7 @@ import ua.com.alevel.facade.crud.ProductVariantCrudFacade;
 import ua.com.alevel.util.WebRequestUtil;
 
 @RestController
-@RequestMapping("/api/admin/product-variants")
+@RequestMapping("/api/private/admin/product-variants")
 public class ProductVariantCrudController {
 
     private final ProductVariantCrudFacade productVariantCrudFacade;

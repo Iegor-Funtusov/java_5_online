@@ -11,7 +11,7 @@ import ua.com.alevel.service.crud.product.QueryTableService;
 import java.util.Collection;
 
 @RestController
-@RequestMapping("/api/products/query-table")
+@RequestMapping("/api/private/admin/products/query-table")
 public class QueryTableController {
 
     private final QueryTableService queryTableService;

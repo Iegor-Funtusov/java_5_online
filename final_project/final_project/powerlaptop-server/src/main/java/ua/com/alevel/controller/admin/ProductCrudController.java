@@ -20,7 +20,7 @@ import ua.com.alevel.data.response.DataContainer;
 import ua.com.alevel.facade.crud.ProductCrudFacade;
 
 @RestController
-@RequestMapping("/api/v1/admin/products")
+@RequestMapping("/api/private/admin/products")
 @PreAuthorize("hasRole('ADMIN')")
 public class ProductCrudController {
 
