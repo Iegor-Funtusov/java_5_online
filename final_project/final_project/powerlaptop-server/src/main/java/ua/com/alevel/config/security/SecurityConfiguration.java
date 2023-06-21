@@ -16,8 +16,7 @@ import org.springframework.security.web.authentication.logout.LogoutHandler;
 import static org.springframework.http.HttpMethod.*;
 import static org.springframework.http.HttpMethod.DELETE;
 import static ua.com.alevel.persistence.sql.type.Permission.*;
-import static ua.com.alevel.persistence.sql.type.RoleType.ADMIN;
-import static ua.com.alevel.persistence.sql.type.RoleType.MANAGER;
+import static ua.com.alevel.persistence.sql.type.RoleType.*;
 
 @Configuration
 @EnableWebSecurity
@@ -62,6 +61,7 @@ public class SecurityConfiguration {
 
 
                 .requestMatchers("/api/private/admin/**").hasRole(ADMIN.name())
+                .requestMatchers("/api/private/personal/**").hasRole(PERSONAL.name())
 
                 /*
                  .requestMatchers(GET, "/api/v1/admin/**").hasAuthority(ADMIN_READ.name())
