@@ -13,7 +13,7 @@ import static ua.com.alevel.persistence.sql.type.Permission.*;
 
 @RequiredArgsConstructor
 public enum RoleType {
-    PERSONAL(Set.of(PERSONAL_READ)),
+    PERSONAL(Set.of(PERSONAL_READ,PERSONAL_CREATE)),
     ADMIN(
             Set.of(
                     ADMIN_READ,

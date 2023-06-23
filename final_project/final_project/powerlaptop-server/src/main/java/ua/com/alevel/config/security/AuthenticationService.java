@@ -11,20 +11,26 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import ua.com.alevel.exception.UserNotFoundException;
 import ua.com.alevel.persistence.sql.entity.token.Token;
 import ua.com.alevel.persistence.sql.entity.user.Admin;
 import ua.com.alevel.persistence.sql.entity.user.Personal;
 import ua.com.alevel.persistence.sql.entity.user.User;
 import ua.com.alevel.persistence.sql.repository.token.TokenRepository;
+import ua.com.alevel.persistence.sql.repository.user.PersonalRepository;
 import ua.com.alevel.persistence.sql.repository.user.UserRepository;
 import ua.com.alevel.persistence.sql.type.TokenType;
+import ua.com.alevel.util.SecurityUtil;
 
 import java.io.IOException;
+
+import static ua.com.alevel.util.ExceptionUtil.USER_NOT_FOUND;
 
 @Service
 @RequiredArgsConstructor
 public class AuthenticationService {
     private final UserRepository<User> repository;
+    private final PersonalRepository personalRepository;
     private final TokenRepository tokenRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
@@ -125,5 +131,12 @@ public class AuthenticationService {
                 new ObjectMapper().writeValue(response.getOutputStream(), authResponse);
             }
         }
+    }
+
+    public Personal findPersonal() {
+        String username = SecurityUtil.getUsername();
+        return personalRepository
+                .findByUsername(username)
+                .orElseThrow(() -> new UserNotFoundException(USER_NOT_FOUND));
     }
 }
