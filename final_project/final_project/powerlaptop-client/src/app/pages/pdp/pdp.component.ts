@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from "@angular/router";
 import { CommonModule } from "@angular/common";
-import {BehaviorSubject, Observable, switchMap, take, tap} from "rxjs";
+import { FormBuilder, FormControl, Validators } from "@angular/forms";
+import { BehaviorSubject, Observable, switchMap, take, tap } from "rxjs";
 
 import { PdpService } from "../../services/pdp.service";
+import { CartService } from "../../services/cart.service";
 import { ProductPdpModel } from "../../models/product-pdp.model";
 import { defaultProductResultModel, ProductResultModel } from "../../models/product-result.model";
-import {CartService} from "../../services/cart.service";
 
 @Component({
   selector: 'app-pdp',
@@ -20,13 +21,24 @@ import {CartService} from "../../services/cart.service";
 export class PdpComponent implements OnInit {
 
   private _productResultSub$: BehaviorSubject<ProductResultModel> = new BehaviorSubject<ProductResultModel>(defaultProductResultModel);
-  private _isValidProductResultSub$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  // private _isValidProductResultSub$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   public readonly productResult$: Observable<ProductResultModel> = this._productResultSub$.asObservable();
-  public readonly isValidProductResult$: Observable<boolean> = this._isValidProductResultSub$.asObservable();
+  // public readonly isValidProductResult$: Observable<boolean> = this._isValidProductResultSub$.asObservable();
 
   product?: ProductPdpModel;
 
-  constructor(private _router: Router, private _pdpService: PdpService, private _cartService: CartService) { }
+  _form = this._fb.group({
+    os: new FormControl('', [Validators.required]),
+    cpu: new FormControl('', [Validators.required]),
+    ram: new FormControl(0, [Validators.required]),
+    ssd: new FormControl(0, [Validators.required]),
+    color: new FormControl('', [Validators.required]),
+    displayResolution: new FormControl('', [Validators.required]),
+    displayType: new FormControl('', [Validators.required]),
+    displaySize: new FormControl('', [Validators.required]),
+  })
+
+  constructor(private _fb: FormBuilder, private _router: Router, private _pdpService: PdpService, private _cartService: CartService) { }
 
   ngOnInit(): void {
     let url = this._router.routerState.snapshot.url;
@@ -36,7 +48,7 @@ export class PdpComponent implements OnInit {
       .subscribe(value => {
         this.product = value as ProductPdpModel;
       });
-
+    this._form.statusChanges.subscribe(status => console.log('status', status))
   }
 
   setOs(os: string): void {
@@ -47,7 +59,8 @@ export class PdpComponent implements OnInit {
           const ps: ProductResultModel = { ...res };
           ps.os = os;
           this._productResultSub$.next({ ...ps });
-          this.checkForUndefined(ps);
+          this._form.controls.os.setValue(os);
+          // this.checkForUndefined(ps);
         })
       )
       .subscribe();
@@ -61,7 +74,8 @@ export class PdpComponent implements OnInit {
           const ps: ProductResultModel = { ...res };
           ps.cpu = cpu;
           this._productResultSub$.next({ ...ps });
-          this.checkForUndefined(ps);
+          this._form.controls.cpu.setValue(cpu);
+          // this.checkForUndefined(ps);
         })
       )
       .subscribe();
@@ -75,7 +89,8 @@ export class PdpComponent implements OnInit {
           const ps: ProductResultModel = { ...res };
           ps.ram = ram;
           this._productResultSub$.next({ ...ps });
-          this.checkForUndefined(ps);
+          this._form.controls.ram.setValue(ram);
+          // this.checkForUndefined(ps);
         })
       )
       .subscribe();
@@ -89,7 +104,8 @@ export class PdpComponent implements OnInit {
           const ps: ProductResultModel = { ...res };
           ps.ssd = ssd;
           this._productResultSub$.next({ ...ps });
-          this.checkForUndefined(ps);
+          this._form.controls.ssd.setValue(ssd);
+          // this.checkForUndefined(ps);
         })
       )
       .subscribe();
@@ -103,7 +119,8 @@ export class PdpComponent implements OnInit {
           const ps: ProductResultModel = { ...res };
           ps.color = color;
           this._productResultSub$.next({ ...ps });
-          this.checkForUndefined(ps);
+          this._form.controls.color.setValue(color);
+          // this.checkForUndefined(ps);
         })
       )
       .subscribe();
@@ -117,7 +134,8 @@ export class PdpComponent implements OnInit {
           const ps: ProductResultModel = { ...res };
           ps.displayResolution = displayResolution;
           this._productResultSub$.next({ ...ps });
-          this.checkForUndefined(ps);
+          this._form.controls.displayResolution.setValue(displayResolution);
+          // this.checkForUndefined(ps);
         })
       )
       .subscribe();
@@ -131,7 +149,8 @@ export class PdpComponent implements OnInit {
           const ps: ProductResultModel = { ...res };
           ps.displayType = displayType;
           this._productResultSub$.next({ ...ps });
-          this.checkForUndefined(ps);
+          this._form.controls.displayType.setValue(displayType);
+          // this.checkForUndefined(ps);
         })
       )
       .subscribe();
@@ -145,21 +164,22 @@ export class PdpComponent implements OnInit {
           const ps: ProductResultModel = { ...res };
           ps.displaySize = displaySize;
           this._productResultSub$.next({ ...ps });
-          this.checkForUndefined(ps);
+          this._form.controls.displaySize.setValue(displaySize);
+          // this.checkForUndefined(ps);
         })
       )
       .subscribe();
   }
 
-  checkForUndefined(ps: any): void {
-    for (let key in ps) {
-      if (ps[key] !== undefined) {
-        this._isValidProductResultSub$.next(true);
-      } else {
-        this._isValidProductResultSub$.next(false);
-      }
-    }
-  }
+  // checkForUndefined(ps: any): void {
+  //   for (let key in ps) {
+  //     if (ps[key] !== undefined) {
+  //       this._isValidProductResultSub$.next(true);
+  //     } else {
+  //       this._isValidProductResultSub$.next(false);
+  //     }
+  //   }
+  // }
 
   addToCart(): void {
     this.productResult$

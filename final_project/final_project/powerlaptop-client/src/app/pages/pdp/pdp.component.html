@@ -1,5 +1,5 @@
-<ng-container *ngIf="product">
-  <table class="table table-striped">
+<ng-container *ngIf="{ productResult: productResult$ | async } as config">
+  <table class="table table-striped" *ngIf="product">
     <tr>
       <th>
         Product brand
@@ -44,7 +44,13 @@
       <td>
         <div class="d-flex flex-wrap">
           <div class="p-1" *ngFor="let os of product.osList">
-            <button class="btn btn-light" (click)="setOs(os)">{{ os }}</button>
+            <button
+              [class.btn-light]="os !== config.productResult?.os"
+              [class.btn-secondary]="os === config.productResult?.os"
+              class="btn"
+              (click)="setOs(os)">
+              {{ os }}
+            </button>
           </div>
         </div>
       </td>
@@ -56,7 +62,13 @@
       <td>
         <div class="d-flex flex-wrap">
           <div class="p-1" *ngFor="let cpu of product.cpuList">
-            <button class="btn btn-light" (click)="setCpu(cpu)">{{ cpu }}</button>
+            <button
+              [class.btn-light]="cpu !== config.productResult?.cpu"
+              [class.btn-secondary]="cpu === config.productResult?.cpu"
+              class="btn"
+              (click)="setCpu(cpu)">
+              {{ cpu }}
+            </button>
           </div>
         </div>
       </td>
@@ -68,7 +80,13 @@
       <td>
         <div class="d-flex flex-wrap">
           <div class="p-1" *ngFor="let ram of product.ramList">
-            <button class="btn btn-light" (click)="setRam(ram)">{{ ram }}</button>
+            <button
+              [class.btn-light]="ram !== config.productResult?.ram"
+              [class.btn-secondary]="ram === config.productResult?.ram"
+              class="btn"
+              (click)="setRam(ram)">
+              {{ ram }}
+            </button>
           </div>
         </div>
       </td>
@@ -80,7 +98,13 @@
       <td>
         <div class="d-flex flex-wrap">
           <div class="p-1" *ngFor="let ssd of product.ssdList">
-            <button class="btn btn-light" (click)="setSsd(ssd)">{{ ssd }}</button>
+            <button
+              [class.btn-light]="ssd !== config.productResult?.ssd"
+              [class.btn-secondary]="ssd === config.productResult?.ssd"
+              class="btn"
+              (click)="setSsd(ssd)">
+              {{ ssd }}
+            </button>
           </div>
         </div>
       </td>
@@ -92,7 +116,11 @@
       <td>
         <div class="d-flex flex-wrap">
           <div class="p-1" *ngFor="let color of product.colorList">
-            <button class="btn btn-light" (click)="setColor(color)">{{ color }}</button>
+            <button
+              [class.btn-light]="color !== config.productResult?.color"
+              [class.btn-secondary]="color === config.productResult?.color"
+              class="btn"
+              (click)="setColor(color)">{{ color }}</button>
           </div>
         </div>
       </td>
@@ -104,7 +132,10 @@
       <td>
         <div class="d-flex flex-wrap">
           <div class="p-1" *ngFor="let displayResolution of product.displayResolutionList">
-            <button class="btn btn-light" (click)="setDisplayResolution(displayResolution)">{{ displayResolution }}</button>
+            <button
+              [class.btn-light]="displayResolution !== config.productResult?.displayResolution"
+              [class.btn-secondary]="displayResolution === config.productResult?.displayResolution"
+              class="btn" (click)="setDisplayResolution(displayResolution)">{{ displayResolution }}</button>
           </div>
         </div>
       </td>
@@ -116,7 +147,10 @@
       <td>
         <div class="d-flex flex-wrap">
           <div class="p-1" *ngFor="let displayType of product.displayTypeList">
-            <button class="btn btn-light" (click)="setDisplayType(displayType)">{{ displayType }}</button>
+            <button
+              [class.btn-light]="displayType !== config.productResult?.displayType"
+              [class.btn-secondary]="displayType === config.productResult?.displayType"
+              class="btn" (click)="setDisplayType(displayType)">{{ displayType }}</button>
           </div>
         </div>
       </td>
@@ -128,7 +162,11 @@
       <td>
         <div class="d-flex flex-wrap">
           <div class="p-1" *ngFor="let displaySize of product.displaySizeList">
-            <button class="btn btn-light" (click)="setDisplaySize(displaySize)">{{ displaySize }}</button>
+            <button
+              [class.btn-light]="displaySize !== config.productResult?.displaySize"
+              [class.btn-secondary]="displaySize === config.productResult?.displaySize"
+              class="btn"
+              (click)="setDisplaySize(displaySize)">{{ displaySize }}</button>
           </div>
         </div>
       </td>
@@ -183,6 +221,6 @@
     </div>
   </div>
   <div class="d-flex flex-column mt-4">
-    <button type="button" class="btn btn-primary" [disabled]="!(isValidProductResult$ | async)" (click)="addToCart()">Buy</button>
+    <button type="button" class="btn btn-primary" [disabled]="!(_form.valid)" (click)="addToCart()">Buy</button>
   </div>
 </ng-container>
