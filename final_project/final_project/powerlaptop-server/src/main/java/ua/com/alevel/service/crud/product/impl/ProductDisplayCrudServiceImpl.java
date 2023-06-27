@@ -7,8 +7,11 @@ import org.springframework.transaction.annotation.Transactional;
 import ua.com.alevel.data.datatable.DataTableRequest;
 import ua.com.alevel.persistence.sql.entity.product.ProductDisplay;
 import ua.com.alevel.persistence.sql.repository.product.ProductDisplayRepository;
+import ua.com.alevel.persistence.sql.type.DisplayType;
 import ua.com.alevel.service.crud.CrudHelperService;
 import ua.com.alevel.service.crud.product.ProductDisplayCrudService;
+
+import java.util.List;
 
 @Service
 @Transactional
@@ -47,5 +50,10 @@ public class ProductDisplayCrudServiceImpl implements ProductDisplayCrudService 
     @Override
     public Page<ProductDisplay> findAll(DataTableRequest request) {
         return crudHelperService.findAll(request, productDisplayRepository);
+    }
+
+    @Override
+    public List<ProductDisplay> findAllByDisplayResolutionAndDisplaySizeAndDisplayType(String displayResolution, String displaySize, DisplayType displayType) {
+        return productDisplayRepository.findAllByDisplayResolutionAndDisplaySizeAndDisplayType(displayResolution, displaySize, displayType);
     }
 }

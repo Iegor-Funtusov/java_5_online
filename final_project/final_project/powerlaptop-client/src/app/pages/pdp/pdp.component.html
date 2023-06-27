@@ -183,6 +183,6 @@
     </div>
   </div>
   <div class="d-flex flex-column mt-4">
-    <button type="button" class="btn btn-primary" [disabled]="!(isValidProductResult$ | async)">Buy</button>
+    <button type="button" class="btn btn-primary" [disabled]="!(isValidProductResult$ | async)" (click)="addToCart()">Buy</button>
   </div>
 </ng-container>

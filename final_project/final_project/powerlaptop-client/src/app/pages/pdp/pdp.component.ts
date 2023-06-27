@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from "@angular/router";
 import { CommonModule } from "@angular/common";
-import { BehaviorSubject, Observable, take, tap } from "rxjs";
+import {BehaviorSubject, Observable, switchMap, take, tap} from "rxjs";
 
 import { PdpService } from "../../services/pdp.service";
 import { ProductPdpModel } from "../../models/product-pdp.model";
 import { defaultProductResultModel, ProductResultModel } from "../../models/product-result.model";
+import {CartService} from "../../services/cart.service";
 
 @Component({
   selector: 'app-pdp',
@@ -25,7 +26,7 @@ export class PdpComponent implements OnInit {
 
   product?: ProductPdpModel;
 
-  constructor(private _router: Router, private _pdpService: PdpService) { }
+  constructor(private _router: Router, private _pdpService: PdpService, private _cartService: CartService) { }
 
   ngOnInit(): void {
     let url = this._router.routerState.snapshot.url;
@@ -35,6 +36,7 @@ export class PdpComponent implements OnInit {
       .subscribe(value => {
         this.product = value as ProductPdpModel;
       });
+
   }
 
   setOs(os: string): void {
@@ -157,5 +159,19 @@ export class PdpComponent implements OnInit {
         this._isValidProductResultSub$.next(false);
       }
     }
+  }
+
+  addToCart(): void {
+    this.productResult$
+      .pipe(
+        switchMap(res => this._pdpService.loadProductIdByVariants(this.product?.id as number, res)),
+        switchMap(res => this._cartService.addToCart(res, 1)),
+      )
+      .subscribe((res) => {
+        this._router.navigateByUrl('/cart')
+      }, (error) => {
+        console.log('error', error);
+        this._router.navigateByUrl('/login')
+      });
   }
 }

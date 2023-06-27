@@ -3,6 +3,7 @@ package ua.com.alevel.facade.pdp.impl;
 import org.springframework.stereotype.Service;
 
 import ua.com.alevel.data.dto.product.ProductPDPDto;
+import ua.com.alevel.data.dto.product.ProductSearchDto;
 import ua.com.alevel.facade.pdp.ProductPDPFacade;
 import ua.com.alevel.persistence.sql.entity.product.Product;
 import ua.com.alevel.persistence.sql.entity.product.ProductVariant;
@@ -29,5 +30,10 @@ public class ProductPDPFacadeImpl implements ProductPDPFacade {
         Product product = productCrudService.findById(id);
         Collection<ProductVariant> productVariants = productVariantCrudService.findByProduct(product);
         return new ProductPDPDto(product, productVariants);
+    }
+
+    @Override
+    public Long findProductIdByVariants(ProductSearchDto dto) {
+        return productVariantCrudService.findProductIdByVariants(dto);
     }
 }

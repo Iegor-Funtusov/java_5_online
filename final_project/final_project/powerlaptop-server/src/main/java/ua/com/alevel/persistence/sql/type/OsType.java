@@ -2,6 +2,8 @@ package ua.com.alevel.persistence.sql.type;
 
 import lombok.Getter;
 
+import java.util.Arrays;
+
 @Getter
 public enum OsType {
 
@@ -17,5 +19,12 @@ public enum OsType {
 
     OsType(String type) {
         this.type = type;
+    }
+
+    public static OsType findByType(String type) {
+        return Arrays
+                .stream(OsType.values()).filter(osType -> osType.getType().equals(type))
+                .findFirst()
+                .get();
     }
 }

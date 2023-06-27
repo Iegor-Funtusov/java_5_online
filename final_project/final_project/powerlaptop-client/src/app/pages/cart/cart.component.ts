@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import {CartService} from "../../services/cart.service";
 import {Observable} from "rxjs";
-import {AsyncPipe, NgIf} from "@angular/common";
+import {AsyncPipe, DatePipe, JsonPipe, NgForOf, NgIf} from "@angular/common";
+import {CartModel} from "../../models/cart.model";
 
 @Component({
   selector: 'app-cart',
@@ -9,13 +10,16 @@ import {AsyncPipe, NgIf} from "@angular/common";
   templateUrl: './cart.component.html',
   imports: [
     NgIf,
-    AsyncPipe
+    AsyncPipe,
+    JsonPipe,
+    NgForOf,
+    DatePipe
   ],
   styleUrls: ['./cart.component.scss']
 })
 export class CartComponent {
 
-  cart$: Observable<string> = this._cartService.loadCart();
+  cart$: Observable<CartModel> = this._cartService.loadCart();
 
   constructor(private _cartService: CartService) {
   }
