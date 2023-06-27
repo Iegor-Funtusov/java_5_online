@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import ua.com.alevel.data.dto.order.CartDto;
 import ua.com.alevel.data.dto.order.CartEntryDto;
+import ua.com.alevel.data.dto.order.ProductOrderDto;
 import ua.com.alevel.facade.order.CartFacade;
 import ua.com.alevel.persistence.sql.entity.order.Cart;
 import ua.com.alevel.persistence.sql.entity.order.CartEntry;
@@ -39,6 +40,14 @@ public class CartFacadeImpl implements CartFacade {
         }
         CartDto cartDto = new CartDto(cart, productVariants);
         cartDto.setPrice(price.toString());
+        for (int i = 0; i < cartEntries.size(); i++) {
+            for (int i1 = 0; i1 < cartDto.getEntries().size(); i1++) {
+                if (i == i1) {
+                    ProductOrderDto productOrderDto = cartDto.getEntries().get(i);
+                    productOrderDto.setQuantity(cartEntries.get(i).getQuantity());
+                }
+            }
+        }
         return cartDto;
     }
 

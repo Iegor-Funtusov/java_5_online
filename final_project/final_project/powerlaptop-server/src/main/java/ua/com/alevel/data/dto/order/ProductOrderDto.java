@@ -28,6 +28,7 @@ public class ProductOrderDto {
     private String displayResolution;
     private DisplayType displayType;
     private String displaySize;
+    private Integer quantity;
 
     public ProductOrderDto(ProductVariant productVariant) {
         this.id = productVariant.getId();

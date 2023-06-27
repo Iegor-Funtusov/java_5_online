@@ -13,4 +13,5 @@ export interface ProductOrderModel {
   displayResolution: string;
   displayType: string;
   displaySize: string;
+  quantity: number;
 }
