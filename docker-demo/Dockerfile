@@ -9,3 +9,6 @@ RUN mvn clean package
 #COPY target/docker_demo.jar docker_demo.jar
 
 ENTRYPOINT ["java", "-jar", "target/docker_demo.jar"]
+
+#docker build -t docker-demo .
+#docker run -p 9000:8080 docker-demo
