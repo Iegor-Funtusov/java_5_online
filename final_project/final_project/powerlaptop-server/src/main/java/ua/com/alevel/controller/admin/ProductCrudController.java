@@ -1,5 +1,10 @@
 package ua.com.alevel.controller.admin;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -30,6 +35,12 @@ public class ProductCrudController {
         this.productCrudFacade = productCrudFacade;
     }
 
+    @Operation(summary = "Create product only by admin")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "Product created",
+                    content = { @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = Boolean.class)) }),
+    })
     @PostMapping
     @PreAuthorize("hasAuthority('admin:create')")
     public ResponseEntity<DataContainer<Boolean>> create(@RequestBody ProductDto dto) {
@@ -51,6 +62,15 @@ public class ProductCrudController {
         return ResponseEntity.ok(new DataContainer<>(true));
     }
 
+    @Operation(summary = "Get a product by id")
+//    @ApiResponses(value = {
+//            @ApiResponse(responseCode = "200", description = "Found the book",
+//                    content = { @Content(mediaType = "application/json",
+//                            schema = @Schema(implementation = ProductDto.class)) }),
+//            @ApiResponse(responseCode = "400", description = "Invalid id",
+//                    content = @Content),
+//            @ApiResponse(responseCode = "404", description = "ProductDto not found",
+//                    content = @Content) })
     @GetMapping("/{id}")
     @PreAuthorize("hasAuthority('admin:read')")
     public ResponseEntity<DataContainer<ProductDto>> findById(@PathVariable Long id) {
