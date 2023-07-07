@@ -3,14 +3,15 @@ package ua.com.alevel.config.security;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import lombok.RequiredArgsConstructor;
 
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import ua.com.alevel.config.processor.annotations.InjectLog;
 import ua.com.alevel.exception.UserNotFoundException;
 import ua.com.alevel.persistence.sql.entity.token.Token;
 import ua.com.alevel.persistence.sql.entity.user.Admin;
@@ -20,15 +21,18 @@ import ua.com.alevel.persistence.sql.repository.token.TokenRepository;
 import ua.com.alevel.persistence.sql.repository.user.PersonalRepository;
 import ua.com.alevel.persistence.sql.repository.user.UserRepository;
 import ua.com.alevel.persistence.sql.type.TokenType;
+import ua.com.alevel.service.logger.LoggerLevel;
+import ua.com.alevel.service.logger.LoggerService;
 import ua.com.alevel.util.SecurityUtil;
 
 import java.io.IOException;
+import java.util.Date;
 
 import static ua.com.alevel.util.ExceptionUtil.USER_NOT_FOUND;
 
 @Service
-@RequiredArgsConstructor
 public class AuthenticationService {
+
     private final UserRepository<User> repository;
     private final PersonalRepository personalRepository;
     private final TokenRepository tokenRepository;
@@ -36,32 +40,62 @@ public class AuthenticationService {
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
 
-    public AuthenticationResponse register(RegisterRequest request) {
+    @InjectLog
+    private LoggerService loggerService;
 
+    public AuthenticationService(
+            UserRepository<User> repository,
+            PersonalRepository personalRepository,
+            TokenRepository tokenRepository,
+            PasswordEncoder passwordEncoder,
+            JwtService jwtService,
+            @Qualifier("authenticationManager")
+            AuthenticationManager authenticationManager) {
+        this.repository = repository;
+        this.personalRepository = personalRepository;
+        this.tokenRepository = tokenRepository;
+        this.passwordEncoder = passwordEncoder;
+        this.jwtService = jwtService;
+        this.authenticationManager = authenticationManager;
+    }
+
+    public AuthenticationResponse register(RegisterRequest request) {
+        loggerService.log(LoggerLevel.INFO, "registered: " + request.getUsername() + " - " + new Date());
         User user = null;
         User savedUser = null;
-        switch (request.getRoleType()) {
-            case ADMIN -> {
-                user = new Admin();
-                user.setUsername(request.getUsername());
-                user.setPassword(passwordEncoder.encode(request.getPassword()));
-                savedUser = repository.save(user);
-            }
-            case PERSONAL -> {
-                user = new Personal();
-                user.setUsername(request.getUsername());
-                user.setPassword(passwordEncoder.encode(request.getPassword()));
-                savedUser = repository.save(user);
-            }
-        }
 
-        var jwtToken = jwtService.generateToken(user);
-        var refreshToken = jwtService.generateRefreshToken(user);
-        saveUserToken(savedUser, jwtToken);
-        return AuthenticationResponse.builder()
-                .accessToken(jwtToken)
-                .refreshToken(refreshToken)
-                .build();
+        if (repository.existsByUsername(request.getUsername())) {
+            loggerService.log(LoggerLevel.ERROR, "User " + request.getUsername() + " is already exist: " + new Date());
+            return null;
+//            throw new RuntimeException("User " + request.getUsername() + " is already exist: " + new Date());
+        } else {
+            switch (request.getRoleType()) {
+                case ADMIN -> {
+                    user = new Admin();
+                    user.setUsername(request.getUsername());
+                    user.setPassword(passwordEncoder.encode(request.getPassword()));
+                    savedUser = repository.save(user);
+                }
+                case PERSONAL -> {
+                    if (!repository.existsByUsername(request.getUsername())) {
+                        user = new Personal();
+                        user.setUsername(request.getUsername());
+                        user.setPassword(passwordEncoder.encode(request.getPassword()));
+                        savedUser = repository.save(user);
+                    } else {
+
+                    }
+                }
+            }
+
+            var jwtToken = jwtService.generateToken(user);
+            var refreshToken = jwtService.generateRefreshToken(user);
+            saveUserToken(savedUser, jwtToken);
+            return AuthenticationResponse.builder()
+                    .accessToken(jwtToken)
+                    .refreshToken(refreshToken)
+                    .build();
+        }
     }
 
     public AuthenticationResponse authenticate(AuthenticationRequest request) {

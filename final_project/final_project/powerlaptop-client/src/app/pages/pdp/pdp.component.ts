@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from "@angular/router";
+import {NavigationEnd, Router, RouterEvent} from "@angular/router";
 import { CommonModule } from "@angular/common";
 import { FormBuilder, FormControl, Validators } from "@angular/forms";
-import { BehaviorSubject, Observable, switchMap, take, tap } from "rxjs";
+import { BehaviorSubject, filter, Observable, switchMap, take, tap } from "rxjs";
 
 import { PdpService } from "../../services/pdp.service";
 import { CartService } from "../../services/cart.service";
@@ -41,14 +41,26 @@ export class PdpComponent implements OnInit {
   constructor(private _fb: FormBuilder, private _router: Router, private _pdpService: PdpService, private _cartService: CartService) { }
 
   ngOnInit(): void {
+    this._router.events.pipe(
+      filter((e): e is RouterEvent => e instanceof RouterEvent),
+      take(1)
+    ).subscribe((e: RouterEvent) => {
+      this._loadProduct();
+    });
+    this._loadProduct();
+    this._form.statusChanges.subscribe(status => console.log('status', status))
+  }
+
+  private _loadProduct(): void {
     let url = this._router.routerState.snapshot.url;
     let productId = url.split('/')[2];
+    console.log('url', url)
+    console.log('productId', productId)
     this._pdpService
       .loadProductById(productId)
       .subscribe(value => {
         this.product = value as ProductPdpModel;
       });
-    this._form.statusChanges.subscribe(status => console.log('status', status))
   }
 
   setOs(os: string): void {

@@ -4,7 +4,7 @@
     <ul class="dropdown-menu">
       <ng-container *ngFor="let product of (products$ | async)">
         <li>
-          <a class="dropdown-item" href="#">{{ product.productInfo }}</a>
+          <a class="dropdown-item" role="button" (click)="navigateToPdp(5)">{{ product.productInfo }}</a>
         </li>
       </ng-container>
     </ul>

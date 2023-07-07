@@ -4,6 +4,7 @@ import {FormControl, FormGroup, ReactiveFormsModule} from "@angular/forms";
 import {BehaviorSubject, Observable, take} from "rxjs";
 import {ProductInfoModel} from "../../models/product-info.model";
 import {AsyncPipe, NgForOf, NgIf} from "@angular/common";
+import {Router, RouterLink} from "@angular/router";
 
 @Component({
   selector: 'app-search',
@@ -13,7 +14,8 @@ import {AsyncPipe, NgForOf, NgIf} from "@angular/common";
     ReactiveFormsModule,
     AsyncPipe,
     NgForOf,
-    NgIf
+    NgIf,
+    RouterLink
   ],
   styleUrls: ['./app-search.component.scss']
 })
@@ -26,7 +28,7 @@ export class AppSearchComponent implements OnInit {
     "query": new FormControl()
   });
 
-  constructor(private _productSearchService: ProductSearchService) {
+  constructor(private _productSearchService: ProductSearchService, private _router: Router) {
   }
 
   ngOnInit(): void {
@@ -42,5 +44,9 @@ export class AppSearchComponent implements OnInit {
             this.productsSub$.next(productInfoModelList);
           });
       });
+  }
+
+  navigateToPdp(id: number): void {
+    this._router.navigateByUrl('/pdp/' + id);
   }
 }

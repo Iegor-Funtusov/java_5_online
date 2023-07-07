@@ -13,6 +13,7 @@ import ua.com.alevel.cron.SyncSupplierService;
 import ua.com.alevel.persistence.sql.entity.product.ProductVariant;
 import ua.com.alevel.persistence.sql.repository.product.ProductVariantRepository;
 import ua.com.alevel.persistence.sql.repository.user.AdminRepository;
+import ua.com.alevel.persistence.sql.repository.user.PersonalRepository;
 import ua.com.alevel.persistence.sql.type.RoleType;
 import ua.com.alevel.service.csv.ExportCSVService;
 
@@ -34,6 +35,9 @@ public class PowerlaptopServerApplication {
     private AdminRepository adminRepository;
 
     @Autowired
+    private PersonalRepository personalRepository;
+
+    @Autowired
     private SyncSupplierService syncSupplierService;
 
     public static void main(String[] args) {
@@ -42,6 +46,17 @@ public class PowerlaptopServerApplication {
 
     @EventListener(ApplicationReadyEvent.class)
     public void run() {
+
+        String personalName = "personal101@mail.com";
+//        if (!personalRepository.existsByUsername(personalName)) {
+            var personal = RegisterRequest.builder()
+                    .username(personalName)
+                    .password("12345678")
+                    .roleType(RoleType.PERSONAL)
+                    .build();
+            System.out.println("Personal token: " + service.register(personal));
+//        }
+
         String adminName = "admin@mail.com";
         if (!adminRepository.existsByUsername(adminName)) {
             var admin = RegisterRequest.builder()
