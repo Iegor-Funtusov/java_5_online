@@ -30,5 +30,10 @@ export const APP_ROUTES: Routes = [
     path: 'cart',
     pathMatch: 'prefix',
     loadChildren:() => import('./pages/cart/cart.router').then(m => m.CART_ROUTES)
+  },
+  {
+    path: 'product-variant',
+    pathMatch: 'prefix',
+    loadChildren:() => import('./pages/product-variant/product-variant.route').then(m => m.PRODUCT_VARIANT_ROUTES)
   }
 ];

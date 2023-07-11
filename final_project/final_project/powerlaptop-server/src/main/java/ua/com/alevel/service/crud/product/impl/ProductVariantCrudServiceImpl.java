@@ -18,8 +18,10 @@ import ua.com.alevel.service.crud.product.ProductCrudService;
 import ua.com.alevel.service.crud.product.ProductDisplayCrudService;
 import ua.com.alevel.service.crud.product.ProductVariantCrudService;
 
+import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.List;
+import java.util.UUID;
 
 import static ua.com.alevel.util.ExceptionUtil.ENTITY_NOT_FOUND;
 
@@ -35,6 +37,20 @@ public class ProductVariantCrudServiceImpl implements ProductVariantCrudService 
 
     @Override
     public void create(ProductVariant entity) {
+
+//        entity.setProduct(productCrudService.findById(1L));
+//        entity.setPrice(new BigDecimal("1000.00"));
+//        entity.setWireless("");
+//        entity.setQuantity(1);
+//        entity.setBattery("");
+//        entity.setCamera("");
+//        entity.setDepth(99.99);
+//        entity.setCode(UUID.randomUUID().toString());
+//        entity.setHeight(99.99);
+//        entity.setProductDisplay(productDisplayCrudService.findById(1L));
+//        entity.setWeight(99.99);
+//        entity.setWidth(99.99);
+
         crudHelperService.create(entity, productVariantRepository);
     }
 
